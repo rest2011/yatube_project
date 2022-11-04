@@ -9,7 +9,7 @@ class Group(models.Model):
     slug = models.CharField(max_length=200)
     description = models.TextField()
 
-    def __str__(self):  
+    def __str__(self):
         return self.title
 
 
@@ -23,7 +23,10 @@ class Post(models.Model):
     )
     group = models.ForeignKey(
         Group,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name='posts',
         blank=True, null=True,
     )
+
+    class Meta:
+        ordering = ['-pub_date']
