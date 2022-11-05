@@ -1,31 +1,16 @@
 from django.shortcuts import render, get_object_or_404
-# posts/views.py
 from .models import Post, Group
 
 
 def index(request):
-    template = 'posts/index.html'
-    # Строку, которую надо вывести на страницу, тоже сохраним в переменную
-    posts = Post.objects.all()[:10]
-    # Словарь с данными принято называть context
-    context = {
-        'posts': posts,
-    }
-    # Третьим параметром передаём словарь context
-    return render(request, template, context)
+    return render(request, 'posts/index.html', {
+        'posts': Post.objects.all()[:10],
+    })
 
 
-# Страница со списком мороженого
 def group_posts(request, slug):
-    template = 'posts/group_list.html'
-    # Строку, которую надо вывести на страницу, тоже сохраним в переменную
     group = get_object_or_404(Group, slug=slug)
-    posts = group.posts.all()[:10]
-    # Словарь с данными принято называть context
-    context = {
-        # А можно сразу записать значение в словарь. Но обычно так не делают
+    return render(request, 'posts/group_list.html', {
         'group': group,
-        'posts': posts,
-    }
-    # Третьим параметром передаём словарь context
-    return render(request, template, context)
+        'posts': group.posts.all()[:10],
+    })

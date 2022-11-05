@@ -6,7 +6,7 @@ User = get_user_model()
 
 class Group(models.Model):
     title = models.CharField(max_length=200)
-    slug = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True)
     description = models.TextField()
 
     def __str__(self):
@@ -29,4 +29,4 @@ class Post(models.Model):
     )
 
     class Meta:
-        ordering = ['-pub_date']
+        ordering = ('-pub_date',)
